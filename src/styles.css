@@ -26,3 +26,12 @@ label {
   text-align: center;
 }
 
+.col-acoes {
+  width: 110px;
+  text-align: center;
+}
+
+.col-acoes-btn {
+  margin: 0 2px !important;
+}
+
