@@ -24,7 +24,7 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-table [value]="lancamentos" [tableStyle]="{ 'table-layout': 'auto' }">
+      <p-table [value]="lancamentos" [tableStyle]="{ 'table-layout': 'auto' }" [paginator]="true" [rows]="5">
         <ng-template pTemplate="header">
           <tr>
             <th>Pessoa</th>
