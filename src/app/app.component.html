@@ -24,7 +24,13 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-table [value]="lancamentos" [tableStyle]="{ 'table-layout': 'auto' }" [paginator]="true" [rows]="5">
+      <p-table
+        [value]="lancamentos"
+        [tableStyle]="{ 'table-layout': 'auto' }"
+        [paginator]="true"
+        [rows]="5"
+        [responsive]="true"
+      >
         <ng-template pTemplate="header">
           <tr>
             <th>Pessoa</th>
@@ -48,9 +54,21 @@
               {{ lancamento.valor }}
             </td>
             <td [ngClass]="'col-acoes'">
-              <button pButton icon="fa-pencil" [ngClass]="'col-acoes-btn'"></button>
+              <a
+                pButton
+                icon="fa-pencil"
+                [ngClass]="'col-acoes-btn'"
+                pTooltip="Editar"
+                tooltipPosition="top"
+              ></a>
 
-              <button pButton icon="fa-trash" [ngClass]="'col-acoes-btn'"></button>
+              <button
+                pButton
+                icon="fa-trash"
+                [ngClass]="'col-acoes-btn'"
+                pTooltip="Excluir"
+                tooltipPosition="top"
+              ></button>
             </td>
           </tr>
         </ng-template>
