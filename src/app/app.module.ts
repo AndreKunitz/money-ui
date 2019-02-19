@@ -7,25 +7,19 @@ import { TableModule } from "primeng/table";
 import { TooltipModule } from "primeng/tooltip";
 
 import { AppComponent } from "./app.component";
-import { NavbarComponent } from './navbar/navbar.component';
-import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
+import { NavbarComponent } from "./navbar/navbar.component";
+import { LancamentosPesquisaComponent } from "./lancamentos-pesquisa/lancamentos-pesquisa.component";
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      NavbarComponent,
-      LancamentosPesquisaComponent
-   ],
-   imports: [
-      BrowserModule,
-      InputTextModule,
-      ButtonModule,
-      TableModule,
-      TooltipModule
-   ],
-   providers: [],
-   bootstrap: [
-      AppComponent
-   ]
+  declarations: [AppComponent, NavbarComponent, LancamentosPesquisaComponent],
+  imports: [
+    BrowserModule,
+    InputTextModule,
+    ButtonModule,
+    TableModule,
+    TooltipModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

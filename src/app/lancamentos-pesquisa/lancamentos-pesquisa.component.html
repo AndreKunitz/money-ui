@@ -56,14 +56,14 @@
             <td [ngClass]="'col-acoes'">
               <a
                 pButton
-                icon="fa-pencil"
+                icon="fa fa-edit"
                 [ngClass]="'col-acoes-btn'"
                 pTooltip="Editar"
                 tooltipPosition="top"
               ></a>
               <button
                 pButton
-                icon="fa-trash"
+                icon="fa fa-trash"
                 [ngClass]="'col-acoes-btn'"
                 pTooltip="Excluir"
                 tooltipPosition="top"
@@ -72,6 +72,10 @@
           </tr>
         </ng-template>
       </p-table>
+    </div>
+
+    <div class="ui-g-12">
+      <a pButton label="Novo Lançamento"></a>
     </div>
   </div>
 </div>
