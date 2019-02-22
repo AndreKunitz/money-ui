@@ -19,22 +19,9 @@ export class PessoasPesquisaComponent implements OnInit {
     { nome: 'Paula Maria', cidade: 'Uberlândia', estado: 'MG', ativo: true }
   ];
 
-  isColAcoes(col: any) {
-    if (col.field === 'acoes') {
-      return 'col-acoes';
-    }
-  }
-
   constructor() { }
 
   ngOnInit() {
-    this.cols = [
-      { field: 'nome', header: 'Nome' },
-      { field: 'cidade', header: 'Cidade' },
-      { field: 'estado', header: 'Estado' },
-      { field: 'status', header: 'Status' },
-      { field: 'acoes', header: '' }
-    ];
   }
 
 }
