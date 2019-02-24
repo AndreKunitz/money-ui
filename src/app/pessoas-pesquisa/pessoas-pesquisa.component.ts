@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { collectExternalReferences } from '@angular/compiler';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
