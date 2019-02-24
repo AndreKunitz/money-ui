@@ -9,11 +9,11 @@
 
       <div class="ui-g-6 ui-md-3 ui-fluid">
         <label>Vencimento</label>
-        <input pInputText type="text">
+        <p-calendar dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
       </div>
       <div class="ui-g-6 ui-md-3 ui-fluid">
         <label>Recebimento</label>
-        <input pInputText type="text">
+        <p-calendar dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
       </div>
       <div class="ui-g-12 ui-md-9 ui-fluid">
         <label>Descrição</label>
@@ -37,7 +37,7 @@
       </div>
       <div class="ui-g-12">
         <button pButton type="submit" label="Salvar" class="btn-form-acoes"></button>
-        <button pButton type="button" label="Novo" class="ui-button-info btn-form-acoes"></button>
+        <button pButton type="button" label="Novo" class="ui-button-secondary btn-form-acoes"></button>
         <a href="javascript:;" class="btn-form-acoes">Voltar para a pesquisa</a>
       </div>
     </div>
