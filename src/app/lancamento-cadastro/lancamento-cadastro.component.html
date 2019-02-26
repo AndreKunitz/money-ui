@@ -15,35 +15,50 @@
         <label>Vencimento</label>
         <p-calendar dateFormat="dd/mm/yy"></p-calendar>
       </div>
+
       <div class="ui-g-6 ui-md-3 ui-fluid">
         <label>{{ tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento' }}</label>
         <p-calendar dateFormat="dd/mm/yy"></p-calendar>
       </div>
+
       <div class="ui-g-12 ui-md-9 ui-fluid">
         <label>Descrição</label>
-        <input pInputText type="text">
+        <input pInputText type="text" name="descricao" ngModel #descricao="ngModel" required minlength="5">
+
+        <div class="ui-message ui-message-error" *ngIf="descricao.hasError('required') && descricao.dirty ">
+          Informe uma descrição
+        </div>
+        <div class="ui-message ui-message-error" *ngIf="descricao.hasError('minlength') && descricao.dirty ">
+          Mínimo de {{ descricao.errors.minlength.requiredLength }} caractéres.
+        </div>
       </div>
+
       <div class="ui-g-12 ui-md-3 ui-fluid">
         <label>Valor</label>
-        <input pInputText type="text" placeholder="R$ 0,00" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }">
+        <input pInputText type="text" name="valor" placeholder="R$ 0,00" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }" ngModel>
       </div>
+
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Categoria</label>
         <p-dropdown [options]="categorias" [autoWidth]="false" placeholder="Selecione"></p-dropdown>
       </div>
+
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Pessoa</label>
         <p-dropdown [options]="pessoas" [autoWidth]="false" [filter]="true" placeholder="Selecione"></p-dropdown>
       </div>
+
       <div class="ui-g-12 ui-fluid">
         <label>Observação</label>
         <textarea pInputTextarea rows="3"></textarea>
       </div>
+
       <div class="ui-g-12">
         <button pButton type="submit" label="Salvar" class="btn-form-acoes"></button>
         <button pButton type="button" label="Novo" class="ui-button-secondary btn-form-acoes"></button>
         <a href="javascript:;" class="btn-form-acoes">Voltar para a pesquisa</a>
       </div>
+
     </div>
 
   </form>
