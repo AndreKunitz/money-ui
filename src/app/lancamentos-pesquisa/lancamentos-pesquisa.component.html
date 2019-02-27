@@ -24,34 +24,7 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-table [value]="lancamentos" [tableStyle]="{ 'table-layout': 'auto' }" [paginator]="true" [rows]="5"
-        [responsive]="true">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>Pessoa</th>
-            <th>Descrição</th>
-            <th>Vencimento</th>
-            <th>Pagamento</th>
-            <th>Valor</th>
-            <th></th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-lancamento>
-          <tr>
-            <td>{{ lancamento.pessoa }}</td>
-            <td>{{ lancamento.descricao }}</td>
-            <td [ngClass]="'col-data'">{{ lancamento.dataVencimento | date:'dd/MM/yyyy' }}</td>
-            <td [ngClass]="'col-data'">{{ lancamento.dataPagamento | date:'dd/MM/yyyy' }}</td>
-            <td [ngClass]="'col-valor'" [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'blue'">
-              {{ lancamento.valor | number:'1.2-2' }}
-            </td>
-            <td [ngClass]="'col-acoes'">
-              <a pButton icon="fa fa-edit" [ngClass]="'col-acoes-btn'" pTooltip="Editar" tooltipPosition="top"></a>
-              <button pButton icon="fa fa-trash" [ngClass]="'col-acoes-btn'" pTooltip="Excluir" tooltipPosition="top"></button>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+      <app-lancamentos-grid [lancamentos]="lancamentos"></app-lancamentos-grid>
     </div>
 
     <div class="ui-g-12">

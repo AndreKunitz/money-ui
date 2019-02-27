@@ -6,12 +6,6 @@ import { Component } from "@angular/core";
   styleUrls: ["./lancamentos-pesquisa.component.css"]
 })
 export class LancamentosPesquisaComponent {
-  cols = [
-    { field: "pessoa", header: "Pessoa", width: "25%" },
-    { field: "descricao", header: "Descrição", width: "15%" },
-    { field: "brand", header: "Brand", width: "35%" },
-    { field: "color", header: "Color", width: "25%" }
-  ];
 
   lancamentos = [
     { tipo: 'DESPESA', descricao: 'Compra de pão', dataVencimento: new Date(2017, 5, 30),
