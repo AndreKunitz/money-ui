@@ -6,10 +6,12 @@ import { NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
 import { NavbarComponent } from "./navbar/navbar.component";
-import { MessageComponent } from './message/message.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, MessageComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
