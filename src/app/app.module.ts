@@ -20,6 +20,7 @@ import { PessoasModule } from './pessoas/pessoas.module';
     BrowserAnimationsModule,
     HttpClientModule,
 
+
     CoreModule,
     LancamentosModule,
     PessoasModule,
