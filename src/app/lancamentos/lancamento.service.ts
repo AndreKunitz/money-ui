@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 
 export interface LancamentoFiltro {
   descricao: string;
+  dataVencimentoInicio: Date;
+  dataVencimentoFim: Date;
 }
 
 @Injectable({

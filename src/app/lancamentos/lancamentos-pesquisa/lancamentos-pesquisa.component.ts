@@ -1,3 +1,4 @@
+import { LancamentoFiltro } from './../lancamento.service';
 import { Component, OnInit } from '@angular/core';
 import { LancamentoService } from '../lancamento.service';
 
@@ -9,6 +10,8 @@ import { LancamentoService } from '../lancamento.service';
 export class LancamentosPesquisaComponent implements OnInit {
 
   descricao: string;
+  dataVencimentoInicio: Date;
+  dataVencimentoFim: Date;
   lancamentos = [];
 
   ngOnInit() {
@@ -19,11 +22,17 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   listar() {
     this.lancamentosService.listar()
-                            .subscribe(dados => this.lancamentos = dados);
+      .subscribe(dados => this.lancamentos = dados);
   }
 
   pesquisar() {
-    this.lancamentosService.pesquisar({ descricao: this.descricao })
-                            .subscribe(dados => this.lancamentos = dados);
+    const filtro: LancamentoFiltro = {
+      descricao: this.descricao,
+      dataVencimentoInicio: this.dataVencimentoInicio,
+      dataVencimentoFim: this.dataVencimentoFim
+    }
+
+    this.lancamentosService.pesquisar(filtro)
+      .subscribe(dados => this.lancamentos = dados);
   }
 }
