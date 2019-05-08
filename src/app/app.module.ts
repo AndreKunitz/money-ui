@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
-
 import { CoreModule } from './core/core.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { PessoasModule } from './pessoas/pessoas.module';
@@ -19,7 +18,6 @@ import { PessoasModule } from './pessoas/pessoas.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-
 
     CoreModule,
     LancamentosModule,
