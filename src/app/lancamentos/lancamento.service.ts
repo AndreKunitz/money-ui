@@ -13,23 +13,32 @@ export interface LancamentoFiltro {
 export class LancamentoService {
 
   private lancamentosUrl = 'http://localhost:8080/lancamentos';
+  private auth = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+  });
 
-  constructor(
-    private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
+
+  listar(): Observable<any> {
+    const httpOptions = { headers: this.auth };
+
+    return this.http.get<any[]>(`${this.lancamentosUrl}?resumo`, httpOptions)
+      .pipe(
+        map(res => res['content'])
+      );
+  }
 
   pesquisar(filtro: LancamentoFiltro): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-    });
-
-    let params = new HttpParams().set('descricao', filtro.descricao);
-
+    const httpOptions = {
+      headers: this.auth,
+      params: new HttpParams().set('descricao', filtro.descricao)
+    };
 
     return this.http
-                  .get<any[]>(`${this.lancamentosUrl}?resumo`, { headers, params } )
-                  .pipe(
-                    map(res => res['content'])
-                  );
+      .get<any[]>(`${this.lancamentosUrl}?resumo`, httpOptions)
+      .pipe(
+        map(res => res['content'])
+      );
   }
 }
