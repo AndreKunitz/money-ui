@@ -15,22 +15,17 @@ export class LancamentosPesquisaComponent implements OnInit {
   lancamentos = [];
 
   ngOnInit() {
-    this.listar();
+    this.pesquisar();
   }
 
   constructor(private lancamentosService: LancamentoService) { }
-
-  listar() {
-    this.lancamentosService.listar()
-      .subscribe(dados => this.lancamentos = dados);
-  }
 
   pesquisar() {
     const filtro: LancamentoFiltro = {
       descricao: this.descricao,
       dataVencimentoInicio: this.dataVencimentoInicio,
       dataVencimentoFim: this.dataVencimentoFim
-    }
+    };
 
     this.lancamentosService.pesquisar(filtro)
       .subscribe(dados => this.lancamentos = dados);

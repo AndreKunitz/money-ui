@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 export interface LancamentoFiltro {
   descricao: string;
@@ -15,30 +16,31 @@ export interface LancamentoFiltro {
 export class LancamentoService {
 
   private lancamentosUrl = 'http://localhost:8080/lancamentos';
-  private auth = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-  });
 
   constructor(private http: HttpClient) { }
 
-  listar(): Observable<any> {
-    const httpOptions = { headers: this.auth };
-
-    return this.http.get<any[]>(`${this.lancamentosUrl}?resumo`, httpOptions)
-      .pipe(
-        map(res => res['content'])
-      );
-  }
-
   pesquisar(filtro: LancamentoFiltro): Observable<any> {
-    const httpOptions = {
-      headers: this.auth,
-      params: new HttpParams().set('descricao', filtro.descricao)
-    };
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    });
+
+    let params = new HttpParams();
+
+    if (filtro.descricao) {
+      params = params.set('descricao', filtro.descricao);
+    }
+
+    if (filtro.dataVencimentoInicio) {
+      params = params.set('dataVencimentoDe', moment(filtro.dataVencimentoInicio).format('YYYY-MM-DD'));
+    }
+
+    if (filtro.dataVencimentoFim) {
+      params = params.set('dataVencimentoAte', moment(filtro.dataVencimentoFim).format('YYYY-MM-DD'));
+    }
 
     return this.http
-      .get<any[]>(`${this.lancamentosUrl}?resumo`, httpOptions)
+      .get<any[]>(`${this.lancamentosUrl}?resumo`, { headers, params })
       .pipe(
         map(res => res['content'])
       );
