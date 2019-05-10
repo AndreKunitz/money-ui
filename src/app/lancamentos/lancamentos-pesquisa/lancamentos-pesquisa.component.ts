@@ -9,9 +9,7 @@ import { LancamentoService } from '../lancamento.service';
 })
 export class LancamentosPesquisaComponent implements OnInit {
 
-  descricao: string;
-  dataVencimentoInicio: Date;
-  dataVencimentoFim: Date;
+  filtro = new LancamentoFiltro(); 
   lancamentos = [];
 
   ngOnInit() {
@@ -21,13 +19,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   constructor(private lancamentosService: LancamentoService) { }
 
   pesquisar() {
-    const filtro: LancamentoFiltro = {
-      descricao: this.descricao,
-      dataVencimentoInicio: this.dataVencimentoInicio,
-      dataVencimentoFim: this.dataVencimentoFim
-    };
-
-    this.lancamentosService.pesquisar(filtro)
-      .subscribe(dados => this.lancamentos = dados);
+    this.lancamentosService.pesquisar(this.filtro)
+      .subscribe(dados => this.lancamentos = dados.lancamentos);
   }
 }
