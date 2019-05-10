@@ -29,7 +29,7 @@ export class LancamentoService {
 
     let params = new HttpParams();
     params = params.set('page', filtro.pagina.toString());
-    params = params.set('size', filtro.itensPorPagina.toString()); 
+    params = params.set('size', filtro.itensPorPagina.toString());
 
     if (filtro.descricao) {
       params = params.set('descricao', filtro.descricao);
@@ -50,9 +50,9 @@ export class LancamentoService {
           const resultado = {
             lancamentos: res['content'],
             total: res.totalElements
-          }
+          };
 
-          return resultado; 
+          return resultado;
         })
       );
   }
