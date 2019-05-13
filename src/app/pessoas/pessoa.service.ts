@@ -1,7 +1,13 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+export class PessoaFiltro {
+  nome: string;
+  pagina = 0;
+  itensPorPagina = 5;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +33,22 @@ export class PessoaService {
       }));
   }
 
-  pesquisar() { }
+  pesquisar(filtro: PessoaFiltro): Observable<any> {
+    let params = new HttpParams();
+
+    if (filtro.nome) {
+      params = params.set('nome', filtro.nome);
+    }
+
+    return this.http.get<any>(this.pessoasUrl, { headers: this.auth, params }).pipe(
+      map(res => {
+        const resultado = {
+          pessoas: res.content,
+          total: res.totalElements
+        };
+        return resultado;
+      })
+    );
+  }
 
 }
