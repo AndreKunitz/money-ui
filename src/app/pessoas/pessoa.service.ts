@@ -35,6 +35,8 @@ export class PessoaService {
 
   pesquisar(filtro: PessoaFiltro): Observable<any> {
     let params = new HttpParams();
+    params = params.set('page', filtro.pagina.toString());
+    params = params.set('size', filtro.itensPorPagina.toString());
 
     if (filtro.nome) {
       params = params.set('nome', filtro.nome);

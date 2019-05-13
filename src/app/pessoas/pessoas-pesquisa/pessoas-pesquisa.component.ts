@@ -10,16 +10,13 @@ import { LazyLoadEvent } from 'primeng/components/common/api';
 })
 export class PessoasPesquisaComponent implements OnInit {
 
-  cols: any[];
   pessoas = [];
   totalRegistros = 0;
   filtro = new PessoaFiltro();
 
   constructor(private pessoaService: PessoaService) { }
 
-  ngOnInit() {
-    this.pesquisar();
-  }
+  ngOnInit() { }
 
   listar() {
     this.pessoaService.listar().subscribe(dados => {
@@ -27,11 +24,18 @@ export class PessoasPesquisaComponent implements OnInit {
     });
   }
 
-  pesquisar() {
+  pesquisar(pagina = 0) {
+    this.filtro.pagina = pagina;
+
     this.pessoaService.pesquisar(this.filtro).subscribe(dados => {
       this.pessoas = dados.pessoas;
       this.totalRegistros = dados.total;
     });
+  }
+
+  aoMudarPagina(event: LazyLoadEvent) {
+    const pagina = event.first / event.rows;
+    this.pesquisar(pagina);
   }
 
 }
