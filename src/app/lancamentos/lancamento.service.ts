@@ -16,17 +16,15 @@ export class LancamentoFiltro {
   providedIn: 'root'
 })
 export class LancamentoService {
-
   private lancamentosUrl = 'http://localhost:8080/lancamentos';
+  private auth = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+  });
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   pesquisar(filtro: LancamentoFiltro): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-    });
-
     let params = new HttpParams();
     params = params.set('page', filtro.pagina.toString());
     params = params.set('size', filtro.itensPorPagina.toString());
@@ -36,15 +34,21 @@ export class LancamentoService {
     }
 
     if (filtro.dataVencimentoInicio) {
-      params = params.set('dataVencimentoDe', moment(filtro.dataVencimentoInicio).format('YYYY-MM-DD'));
+      params = params.set(
+        'dataVencimentoDe',
+        moment(filtro.dataVencimentoInicio).format('YYYY-MM-DD')
+      );
     }
 
     if (filtro.dataVencimentoFim) {
-      params = params.set('dataVencimentoAte', moment(filtro.dataVencimentoFim).format('YYYY-MM-DD'));
+      params = params.set(
+        'dataVencimentoAte',
+        moment(filtro.dataVencimentoFim).format('YYYY-MM-DD')
+      );
     }
 
     return this.http
-      .get<any>(`${this.lancamentosUrl}?resumo`, { headers, params })
+      .get<any>(`${this.lancamentosUrl}?resumo`, { headers: this.auth, params })
       .pipe(
         map(res => {
           const resultado = {
@@ -55,5 +59,11 @@ export class LancamentoService {
           return resultado;
         })
       );
+  }
+
+  excluir(codigo: number): Observable<void> {
+    return this.http.delete<void>(`${this.lancamentosUrl}/${codigo}`, {
+      headers: this.auth
+    });
   }
 }
