@@ -1,8 +1,13 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
+import { ToastyConfig } from 'ng2-toasty';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor(private toastyConfig: ToastyConfig) {
+    toastyConfig.theme = 'bootstrap';
+  }
+}

@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/components/common/api';
 
 import { LancamentoService } from '../lancamento.service';
+import { ToastyService } from 'ng2-toasty';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -19,7 +20,10 @@ export class LancamentosPesquisaComponent implements OnInit {
     console.log(this.tabela);
   }
 
-  constructor(private lancamentosService: LancamentoService) {}
+  constructor(
+    private lancamentosService: LancamentoService,
+    private toasty: ToastyService
+  ) {}
 
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
@@ -39,6 +43,8 @@ export class LancamentosPesquisaComponent implements OnInit {
     this.lancamentosService.excluir(lancamento.codigo).subscribe(() => {
       this.tabela.first = 0;
       this.pesquisar();
+
+      this.toasty.success('Lançamento excluído com sucesso!');
     });
   }
 }

@@ -5,23 +5,24 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
+import { ToastyModule } from 'ng2-toasty';
+
 import { CoreModule } from './core/core.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
 
+    ToastyModule.forRoot(),
+
     CoreModule,
     LancamentosModule,
-    PessoasModule,
+    PessoasModule
   ],
   providers: [LancamentoService],
   bootstrap: [AppComponent]
