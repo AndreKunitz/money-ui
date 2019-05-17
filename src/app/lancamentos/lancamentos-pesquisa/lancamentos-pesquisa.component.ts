@@ -5,6 +5,7 @@ import { LazyLoadEvent } from 'primeng/components/common/api';
 
 import { LancamentoService } from '../lancamento.service';
 import { ToastyService } from 'ng2-toasty';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -24,16 +25,22 @@ export class LancamentosPesquisaComponent implements OnInit {
   constructor(
     private lancamentosService: LancamentoService,
     private toasty: ToastyService,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private errorHandler: ErrorHandlerService
   ) {}
 
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
 
-    this.lancamentosService.pesquisar(this.filtro).subscribe(dados => {
-      this.lancamentos = dados.lancamentos;
-      this.totalRegistros = dados.total;
-    });
+    this.lancamentosService.pesquisar(this.filtro).subscribe(
+      dados => {
+        this.lancamentos = dados.lancamentos;
+        this.totalRegistros = dados.total;
+      },
+      error => {
+        this.errorHandler.handle(error);
+      }
+    );
   }
 
   aoMudarPagina(event: LazyLoadEvent) {
@@ -51,10 +58,15 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   excluir(lancamento: any): void {
-    this.lancamentosService.excluir(lancamento.codigo).subscribe(() => {
-      this.tabela.first = 0;
-      this.pesquisar();
-      this.toasty.success('Lançamento excluído com sucesso!');
-    });
+    this.lancamentosService.excluir(lancamento.codigo).subscribe(
+      () => {
+        this.tabela.first = 0;
+        this.pesquisar();
+        this.toasty.success('Lançamento excluído com sucesso!');
+      },
+      error => {
+        this.errorHandler.handle(error);
+      }
+    );
   }
 }
