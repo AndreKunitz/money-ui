@@ -13,14 +13,13 @@ export class PessoaFiltro {
   providedIn: 'root'
 })
 export class PessoaService {
-
   private pessoasUrl = 'http://localhost:8080/pessoas';
   private auth = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
+    Authorization: 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
   });
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   listar(): Observable<any> {
     return this.http.get<any>(this.pessoasUrl, { headers: this.auth }).pipe(
@@ -30,7 +29,8 @@ export class PessoaService {
           total: res.totalElements
         };
         return resultado;
-      }));
+      })
+    );
   }
 
   pesquisar(filtro: PessoaFiltro): Observable<any> {
@@ -42,15 +42,22 @@ export class PessoaService {
       params = params.set('nome', filtro.nome);
     }
 
-    return this.http.get<any>(this.pessoasUrl, { headers: this.auth, params }).pipe(
-      map(res => {
-        const resultado = {
-          pessoas: res.content,
-          total: res.totalElements
-        };
-        return resultado;
-      })
-    );
+    return this.http
+      .get<any>(this.pessoasUrl, { headers: this.auth, params })
+      .pipe(
+        map(res => {
+          const resultado = {
+            pessoas: res.content,
+            total: res.totalElements
+          };
+          return resultado;
+        })
+      );
   }
 
+  excluir(codigo: number): Observable<void> {
+    return this.http.delete<void>(`${this.pessoasUrl}/${codigo}`, {
+      headers: this.auth
+    });
+  }
 }

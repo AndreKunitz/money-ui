@@ -1,7 +1,6 @@
 <div class="container">
-
   <div class="ui-g">
-    <form class="ui-g-12" autocomplete="off" (ngSubmit)="pesquisar()">
+    <form autocomplete="off" (ngSubmit)="pesquisar()">
       <div class="ui-g-12">
         <h1>Pessoas</h1>
       </div>
@@ -19,10 +18,17 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-
-      <p-table [value]="pessoas" [tableStyle]="{ 'table-layout': 'auto' }" [paginator]="true"
-        [rows]="filtro.itensPorPagina" [responsive]="true" [lazy]="true" [totalRecords]="totalRegistros"
-        (onLazyLoad)="aoMudarPagina($event)">
+      <p-table
+        [value]="pessoas"
+        [tableStyle]="{ 'table-layout': 'auto' }"
+        [paginator]="true"
+        [rows]="filtro.itensPorPagina"
+        [responsive]="true"
+        [lazy]="true"
+        [totalRecords]="totalRegistros"
+        (onLazyLoad)="aoMudarPagina($event)"
+        #tabela
+      >
         <ng-template pTemplate="header">
           <tr>
             <th>Nome</th>
@@ -38,24 +44,38 @@
             <td>{{ pessoa.endereco.cidade }}</td>
             <td>{{ pessoa.endereco.estado }}</td>
             <td>
-              <a href="javascript:;" [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'" tolltipPosition="top">
-                {{ pessoa.ativo ? 'Ativo' : 'Inativo' }}
+              <a
+                href="javascript:;"
+                [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'"
+                tolltipPosition="top"
+              >
+                {{ pessoa.ativo ? "Ativo" : "Inativo" }}
               </a>
             </td>
             <td [ngClass]="'col-acoes'">
-              <a pButton icon="fa fa-edit" [ngClass]="'col-acoes-btn'" pTooltip="Editar" tooltipPosition="top"></a>
-              <button pButton icon="fa fa-trash" [ngClass]="'col-acoes-btn'" pTooltip="Excluir"
-                tooltipPosition="top"></button>
+              <a
+                pButton
+                icon="fa fa-edit"
+                [ngClass]="'col-acoes-btn'"
+                pTooltip="Editar"
+                tooltipPosition="top"
+              ></a>
+              <button
+                pButton
+                icon="fa fa-trash"
+                [ngClass]="'col-acoes-btn'"
+                pTooltip="Excluir"
+                tooltipPosition="top"
+                (click)="confirmarExclusao(pessoa)"
+              ></button>
             </td>
           </tr>
         </ng-template>
       </p-table>
-
     </div>
 
     <div class="ui-g-12">
       <a pButton label="Nova Pessoa"></a>
     </div>
   </div>
-
 </div>

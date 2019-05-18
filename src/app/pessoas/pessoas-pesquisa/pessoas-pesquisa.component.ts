@@ -1,7 +1,10 @@
+import { ConfirmationService } from 'primeng/api';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { ToastyService } from 'ng2-toasty';
 import { PessoaService, PessoaFiltro } from './../pessoa.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/components/common/api';
-
+import { TableRadioButton } from 'primeng/table';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -9,14 +12,19 @@ import { LazyLoadEvent } from 'primeng/components/common/api';
   styleUrls: ['./pessoas-pesquisa.component.css']
 })
 export class PessoasPesquisaComponent implements OnInit {
-
+  @ViewChild('tabela') tabela;
   pessoas = [];
   totalRegistros = 0;
   filtro = new PessoaFiltro();
 
-  constructor(private pessoaService: PessoaService) { }
+  constructor(
+    private pessoaService: PessoaService,
+    private toasty: ToastyService,
+    private confirmation: ConfirmationService,
+    private errorHandler: ErrorHandlerService
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   listar() {
     this.pessoaService.listar().subscribe(dados => {
@@ -38,4 +46,25 @@ export class PessoasPesquisaComponent implements OnInit {
     this.pesquisar(pagina);
   }
 
+  confirmarExclusao(pessoa: any) {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => {
+        this.excluir(pessoa);
+      }
+    });
+  }
+
+  excluir(pessoa: any): void {
+    this.pessoaService.excluir(pessoa.codigo).subscribe(
+      () => {
+        this.tabela.first = 0;
+        this.pesquisar();
+        this.toasty.success('Lançamento excluído com sucesso!');
+      },
+      error => {
+        this.errorHandler.handle(error);
+      }
+    );
+  }
 }
