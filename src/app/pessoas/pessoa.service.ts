@@ -60,4 +60,10 @@ export class PessoaService {
       headers: this.auth
     });
   }
+
+  alternarStatus(codigo: number, status: boolean): Observable<void> {
+    return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, status, {
+      headers: this.auth
+    });
+  }
 }

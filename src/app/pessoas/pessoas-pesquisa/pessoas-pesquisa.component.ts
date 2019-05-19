@@ -71,4 +71,22 @@ export class PessoasPesquisaComponent implements OnInit {
       }
     );
   }
+
+  alternarStatus(pessoa: any, event: LazyLoadEvent): void {
+    const novoStatus = !pessoa.ativo;
+
+    this.pessoaService
+      .alternarStatus(pessoa.codigo, novoStatus)
+      .subscribe(() => {
+        const acao = novoStatus ? 'ativado' : 'desativado';
+        pessoa.ativa = novoStatus;
+
+        this.tabela.first = 0;
+        this.pesquisar();
+        this.messageService.add({
+          severity: 'success',
+          detail: `${pessoa.nome} ${acao} com sucesso!`
+        });
+      });
+  }
 }
