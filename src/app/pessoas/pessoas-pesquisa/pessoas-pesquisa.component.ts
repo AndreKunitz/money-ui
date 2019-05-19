@@ -1,10 +1,11 @@
-import { ConfirmationService } from 'primeng/api';
-import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { ToastyService } from 'ng2-toasty';
-import { PessoaService, PessoaFiltro } from './../pessoa.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { ConfirmationService } from 'primeng/api';
 import { LazyLoadEvent } from 'primeng/components/common/api';
-import { TableRadioButton } from 'primeng/table';
+import { MessageService } from 'primeng/components/common/messageservice';
+
+import { PessoaService, PessoaFiltro } from './../pessoa.service';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -19,7 +20,7 @@ export class PessoasPesquisaComponent implements OnInit {
 
   constructor(
     private pessoaService: PessoaService,
-    private toasty: ToastyService,
+    private messageService: MessageService,
     private confirmation: ConfirmationService,
     private errorHandler: ErrorHandlerService
   ) {}
@@ -60,7 +61,10 @@ export class PessoasPesquisaComponent implements OnInit {
       () => {
         this.tabela.first = 0;
         this.pesquisar();
-        this.toasty.success('Lançamento excluído com sucesso!');
+        this.messageService.add({
+          severity: 'success',
+          detail: 'Lançamento excluído com sucesso!'
+        });
       },
       error => {
         this.errorHandler.handle(error);
