@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CategoriaService {
-  private categoriasUrl = 'localhost:8080/categorias';
+  private categoriasUrl = 'http://localhost:8080/categorias';
   private auth = new HttpHeaders({
     'Content-Type': 'application/json',
     Authorization: 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
