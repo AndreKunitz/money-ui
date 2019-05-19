@@ -28,18 +28,28 @@ export class PessoasPesquisaComponent implements OnInit {
   ngOnInit() {}
 
   listar() {
-    this.pessoaService.listar().subscribe(dados => {
-      this.pessoas = dados.pessoas;
-    });
+    this.pessoaService.listar().subscribe(
+      dados => {
+        this.pessoas = dados.pessoas;
+      },
+      error => {
+        this.errorHandler.handle(error);
+      }
+    );
   }
 
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
 
-    this.pessoaService.pesquisar(this.filtro).subscribe(dados => {
-      this.pessoas = dados.pessoas;
-      this.totalRegistros = dados.total;
-    });
+    this.pessoaService.pesquisar(this.filtro).subscribe(
+      dados => {
+        this.pessoas = dados.pessoas;
+        this.totalRegistros = dados.total;
+      },
+      error => {
+        this.errorHandler.handle(error);
+      }
+    );
   }
 
   aoMudarPagina(event: LazyLoadEvent) {
@@ -75,9 +85,8 @@ export class PessoasPesquisaComponent implements OnInit {
   alternarStatus(pessoa: any, event: LazyLoadEvent): void {
     const novoStatus = !pessoa.ativo;
 
-    this.pessoaService
-      .alternarStatus(pessoa.codigo, novoStatus)
-      .subscribe(() => {
+    this.pessoaService.alternarStatus(pessoa.codigo, novoStatus).subscribe(
+      () => {
         const acao = novoStatus ? 'ativado' : 'desativado';
         pessoa.ativa = novoStatus;
 
@@ -87,6 +96,10 @@ export class PessoasPesquisaComponent implements OnInit {
           severity: 'success',
           detail: `${pessoa.nome} ${acao} com sucesso!`
         });
-      });
+      },
+      error => {
+        this.errorHandler.handle(error);
+      }
+    );
   }
 }
