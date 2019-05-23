@@ -1,5 +1,6 @@
 export class Pessoa {
   codigo: number;
+  ativo = true;
 }
 
 export class Categoria {

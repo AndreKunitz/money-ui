@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
+import { Lancamento } from '../core/model';
 
 export class LancamentoFiltro {
   descricao: string;
@@ -63,6 +64,12 @@ export class LancamentoService {
 
   excluir(codigo: number): Observable<void> {
     return this.http.delete<void>(`${this.lancamentosUrl}/${codigo}`, {
+      headers: this.auth
+    });
+  }
+
+  adicionarLancamento(lancamento: Lancamento): Observable<any> {
+    return this.http.post<any>(this.lancamentosUrl, lancamento, {
       headers: this.auth
     });
   }
