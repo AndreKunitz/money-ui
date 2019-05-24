@@ -1,3 +1,4 @@
+import { Pessoa } from './../core/model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -65,5 +66,9 @@ export class PessoaService {
     return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, status, {
       headers: this.auth
     });
+  }
+
+  salvar(pessoa: Pessoa): Observable<any> {
+    return this.http.post<any>(this.pessoasUrl, pessoa, { headers: this.auth });
   }
 }
