@@ -1,5 +1,6 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
@@ -17,7 +18,7 @@ registerLocaleData(localePt);
 
 @NgModule({
   declarations: [NavbarComponent],
-  imports: [CommonModule, GrowlModule, ConfirmDialogModule],
+  imports: [CommonModule, GrowlModule, ConfirmDialogModule, RouterModule],
   exports: [NavbarComponent, GrowlModule, ConfirmDialogModule],
   providers: [
     ErrorHandlerService,
