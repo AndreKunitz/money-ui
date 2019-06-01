@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { MessageService } from 'primeng/components/common/messageservice';
+import * as moment from 'moment';
 
 import { Lancamento } from 'src/app/core/model';
 import { LancamentoService } from './../lancamento.service';
@@ -34,10 +35,25 @@ export class LancamentoCadastroComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.route.snapshot.params['codigo']);
+    const codigoLancamento = this.route.snapshot.params['codigo'];
+
+    if (codigoLancamento) {
+      this.carregarLancamento(codigoLancamento);
+    }
 
     this.carregarCaterorias();
     this.carregarPessoas();
+  }
+
+  carregarLancamento(codigo: number) {
+    this.lancamentoService.buscarPorCodigo(codigo).subscribe(
+      dados => {
+        this.lancamento = this.converterStringsParaData(dados);
+      },
+      erro => {
+        this.errorHandler.handle(erro);
+      }
+    );
   }
 
   carregarCaterorias() {
@@ -81,5 +97,21 @@ export class LancamentoCadastroComponent implements OnInit {
 
     form.reset();
     this.lancamento = new Lancamento();
+  }
+
+  converterStringsParaData(lancamento: Lancamento): Lancamento {
+    lancamento.dataVencimento = moment(
+      lancamento.dataVencimento,
+      'YYYY-MM-DD'
+    ).toDate();
+
+    if (lancamento.dataPagamento) {
+      lancamento.dataPagamento = moment(
+        lancamento.dataVencimento,
+        'YYYY-MM-DD'
+      ).toDate();
+    }
+
+    return lancamento;
   }
 }

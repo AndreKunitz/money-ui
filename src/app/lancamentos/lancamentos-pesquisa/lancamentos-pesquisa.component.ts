@@ -19,9 +19,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   filtro = new LancamentoFiltro();
   lancamentos = [];
 
-  ngOnInit() {
-    console.log(this.tabela);
-  }
+  ngOnInit() {}
 
   constructor(
     private lancamentosService: LancamentoService,
@@ -30,7 +28,7 @@ export class LancamentosPesquisaComponent implements OnInit {
     private errorHandler: ErrorHandlerService
   ) {}
 
-  pesquisar(pagina = 0) {
+  pesquisar(pagina = 0): void {
     this.filtro.pagina = pagina;
 
     this.lancamentosService.pesquisar(this.filtro).subscribe(
@@ -44,12 +42,12 @@ export class LancamentosPesquisaComponent implements OnInit {
     );
   }
 
-  aoMudarPagina(event: LazyLoadEvent) {
+  aoMudarPagina(event: LazyLoadEvent): void {
     const pagina = event.first / event.rows;
     this.pesquisar(pagina);
   }
 
-  confirmarExclusao(lancamento: any) {
+  confirmarExclusao(lancamento: any): void {
     this.confirmation.confirm({
       message: 'Tem certeza que deseja excluir?',
       accept: () => {
