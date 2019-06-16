@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Pessoa } from 'src/app/core/model';
@@ -17,10 +18,13 @@ export class PessoaCadastroComponent implements OnInit {
   constructor(
     private pessoaService: PessoaService,
     private errorHandlerService: ErrorHandlerService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private title: Title
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.title.setTitle('Nova pessoa');
+  }
 
   salvar(form: FormControl) {
     this.pessoaService.salvar(this.pessoa).subscribe(
