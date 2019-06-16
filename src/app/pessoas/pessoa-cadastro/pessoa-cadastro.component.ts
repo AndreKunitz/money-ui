@@ -1,13 +1,12 @@
 import { Title } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { Pessoa } from 'src/app/core/model';
-
-import { PessoaService } from '../pessoa.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { MessageService } from 'primeng/components/common/messageservice';
 
+import { Pessoa } from 'src/app/core/model';
+import { PessoaService } from '../pessoa.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
@@ -23,6 +22,7 @@ export class PessoaCadastroComponent implements OnInit {
     private errorHandlerService: ErrorHandlerService,
     private messageService: MessageService,
     private route: ActivatedRoute,
+    private router: Router,
     private title: Title
   ) {}
 
@@ -52,21 +52,50 @@ export class PessoaCadastroComponent implements OnInit {
     );
   }
 
-  salvar(form: FormControl) {
-    this.pessoaService.salvar(this.pessoa).subscribe(
-      () => {
+  salvar() {
+    if (this.editando) {
+      this.atualizarPessoa();
+    } else {
+      this.adicionarPessoa();
+    }
+  }
+
+  adicionarPessoa() {
+    this.pessoaService.adicionar(this.pessoa).subscribe(
+      pessoaAdicionada => {
         this.messageService.add({
-          severity: 'sucsses',
+          severity: 'success',
           detail: 'Pessoa cadastrada com sucesso!'
         });
+
+        this.router.navigate(['/pessoas', pessoaAdicionada.codigo]);
       },
       erro => {
         this.errorHandlerService.handle(erro);
       }
     );
+  }
 
+  atualizarPessoa() {
+    this.pessoaService.atualizar(this.pessoa).subscribe(
+      pessoa => {
+        this.pessoa = pessoa;
+        this.messageService.add({
+          severity: 'success',
+          detail: 'Pessoa alterada com sucesso!'
+        });
+        this.atualizarTituloEdicao();
+      },
+      erro => {
+        this.errorHandlerService.handle(erro);
+      }
+    );
+  }
+
+  novo(form: FormControl) {
     form.reset();
-    this.pessoa = new Pessoa();
+
+    this.router.navigate(['/pessoas/novo']);
   }
 
   atualizarTituloEdicao() {

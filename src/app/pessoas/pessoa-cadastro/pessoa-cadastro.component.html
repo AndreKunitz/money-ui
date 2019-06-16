@@ -1,5 +1,5 @@
 <div class="container">
-  <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+  <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar()">
     <div class="ui-g">
       <div class="ui-g-12">
         <h1>{{ editando ? "Edição de " : "Nova " }} Pessoa</h1>
@@ -159,8 +159,9 @@
         <button
           pButton
           type="button"
-          label="Novo"
+          label="Nova"
           class="ui-button-secondary btn-form-acoes"
+          (click)="novo(f)"
         ></button>
         <a href="javascript:;" class="btn-form-acoes" routerLink="/pessoas"
           >Voltar para a pesquisa</a

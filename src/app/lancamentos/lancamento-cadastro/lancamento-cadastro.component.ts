@@ -92,19 +92,19 @@ export class LancamentoCadastroComponent implements OnInit {
     );
   }
 
-  salvar(form: FormControl) {
+  salvar() {
     if (this.editando) {
-      this.atualizarLancamento(form);
+      this.atualizarLancamento();
     } else {
-      this.adicionarLancamento(form);
+      this.adicionarLancamento();
     }
   }
 
-  adicionarLancamento(form: FormControl) {
+  adicionarLancamento() {
     this.lancamentoService.adicionarLancamento(this.lancamento).subscribe(
       lancamentoAdicionado => {
         this.messageService.add({
-          severity: 'sucsses',
+          severity: 'success',
           detail: 'Lançamento cadastrado com sucesso!'
         });
 
@@ -116,12 +116,12 @@ export class LancamentoCadastroComponent implements OnInit {
     );
   }
 
-  atualizarLancamento(form: FormControl) {
+  atualizarLancamento() {
     this.lancamentoService.atualizar(this.lancamento).subscribe(
       lancamento => {
         this.lancamento = lancamento;
         this.messageService.add({
-          severity: 'sucsses',
+          severity: 'success',
           detail: 'Lançamento alterado com sucesso!'
         });
         this.atualizarTituloEdicao();
