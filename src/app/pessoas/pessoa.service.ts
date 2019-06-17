@@ -68,7 +68,19 @@ export class PessoaService {
     });
   }
 
-  salvar(pessoa: Pessoa): Observable<any> {
+  adicionar(pessoa: Pessoa): Observable<any> {
     return this.http.post<any>(this.pessoasUrl, pessoa, { headers: this.auth });
+  }
+
+  buscarPorCodigo(codigo: number): Observable<any> {
+    return this.http.get<any>(`${this.pessoasUrl}/${codigo}`, {
+      headers: this.auth
+    });
+  }
+
+  atualizar(pessoa: Pessoa): Observable<any> {
+    return this.http.put<any>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa, {
+      headers: this.auth
+    });
   }
 }

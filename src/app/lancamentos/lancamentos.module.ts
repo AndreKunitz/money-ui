@@ -14,13 +14,11 @@ import { InputTextModule } from 'primeng/inputtext';
 
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
 import { SharedModule } from './../shared/shared.module';
 
 @NgModule({
-  declarations: [
-    LancamentosPesquisaComponent,
-    LancamentoCadastroComponent
-  ],
+  declarations: [LancamentosPesquisaComponent, LancamentoCadastroComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -36,11 +34,9 @@ import { SharedModule } from './../shared/shared.module';
 
     CurrencyMaskModule,
 
-    SharedModule
+    SharedModule,
+    LancamentosRoutingModule
   ],
-  exports: [
-    LancamentosPesquisaComponent,
-    LancamentoCadastroComponent
-  ]
+  exports: []
 })
-export class LancamentosModule { }
+export class LancamentosModule {}

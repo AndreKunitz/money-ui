@@ -1,9 +1,13 @@
-import { MessageService } from 'primeng/components/common/messageservice';
-import { LancamentoService } from './../lancamento.service';
-import { FormControl } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { MessageService } from 'primeng/components/common/messageservice';
+import * as moment from 'moment';
 
 import { Lancamento } from 'src/app/core/model';
+import { LancamentoService } from './../lancamento.service';
 import { PessoaService } from './../../pessoas/pessoa.service';
 import { CategoriaService } from './../../categorias/categoria.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
@@ -27,12 +31,39 @@ export class LancamentoCadastroComponent implements OnInit {
     private pessoaService: PessoaService,
     private categoriaService: CategoriaService,
     private errorHandler: ErrorHandlerService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private title: Title
   ) {}
 
   ngOnInit() {
+    this.title.setTitle('Novo lançamento');
+
+    const codigoLancamento = this.route.snapshot.params['codigo'];
+
+    if (codigoLancamento) {
+      this.carregarLancamento(codigoLancamento);
+    }
+
     this.carregarCaterorias();
     this.carregarPessoas();
+  }
+
+  get editando(): Boolean {
+    return Boolean(this.lancamento.codigo);
+  }
+
+  carregarLancamento(codigo: number) {
+    this.lancamentoService.buscarPorCodigo(codigo).subscribe(
+      dados => {
+        this.lancamento = this.converterStringsParaData(dados);
+        this.atualizarTituloEdicao();
+      },
+      erro => {
+        this.errorHandler.handle(erro);
+      }
+    );
   }
 
   carregarCaterorias() {
@@ -61,20 +92,77 @@ export class LancamentoCadastroComponent implements OnInit {
     );
   }
 
-  salvar(form: FormControl) {
+  salvar() {
+    if (this.editando) {
+      this.atualizarLancamento();
+    } else {
+      this.adicionarLancamento();
+    }
+  }
+
+  adicionarLancamento() {
     this.lancamentoService.adicionarLancamento(this.lancamento).subscribe(
-      () => {
+      lancamentoAdicionado => {
         this.messageService.add({
-          severity: 'sucsses',
+          severity: 'success',
           detail: 'Lançamento cadastrado com sucesso!'
         });
+
+        this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
       },
       erro => {
         this.errorHandler.handle(erro);
       }
     );
+  }
 
+  atualizarLancamento() {
+    this.lancamentoService.atualizar(this.lancamento).subscribe(
+      lancamento => {
+        this.lancamento = lancamento;
+        this.messageService.add({
+          severity: 'success',
+          detail: 'Lançamento alterado com sucesso!'
+        });
+        this.atualizarTituloEdicao();
+      },
+      erro => {
+        this.errorHandler.handle(erro);
+      }
+    );
+  }
+
+  converterStringsParaData(lancamento: Lancamento): Lancamento {
+    lancamento.dataVencimento = moment(
+      lancamento.dataVencimento,
+      'YYYY-MM-DD'
+    ).toDate();
+
+    if (lancamento.dataPagamento) {
+      lancamento.dataPagamento = moment(
+        lancamento.dataVencimento,
+        'YYYY-MM-DD'
+      ).toDate();
+    }
+
+    return lancamento;
+  }
+
+  novo(form: FormControl) {
     form.reset();
-    this.lancamento = new Lancamento();
+
+    // Workarround para o form reset não anular o valor de lancamento.tipo
+    setTimeout(
+      function() {
+        this.lancamento = new Lancamento();
+      }.bind(this),
+      1
+    );
+
+    this.router.navigate(['/lancamentos/novo']);
+  }
+
+  atualizarTituloEdicao() {
+    this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);
   }
 }

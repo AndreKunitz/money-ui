@@ -1,7 +1,9 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { Title } from '@angular/platform-browser';
 
 import { GrowlModule } from 'primeng/growl';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -12,12 +14,13 @@ import { ErrorHandlerService } from './error-handler.service';
 import { PessoaService } from './../pessoas/pessoa.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
 import { NavbarComponent } from './navbar/navbar.component';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
 registerLocaleData(localePt);
 
 @NgModule({
-  declarations: [NavbarComponent],
-  imports: [CommonModule, GrowlModule, ConfirmDialogModule],
+  declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
+  imports: [CommonModule, GrowlModule, ConfirmDialogModule, RouterModule],
   exports: [NavbarComponent, GrowlModule, ConfirmDialogModule],
   providers: [
     ErrorHandlerService,
@@ -25,6 +28,7 @@ registerLocaleData(localePt);
     MessageService,
     LancamentoService,
     PessoaService,
+    Title,
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]
 })

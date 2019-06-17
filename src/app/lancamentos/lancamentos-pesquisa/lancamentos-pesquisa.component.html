@@ -87,6 +87,7 @@
                 [ngClass]="'col-acoes-btn'"
                 pTooltip="Editar"
                 tooltipPosition="top"
+                [routerLink]="['/lancamentos', lancamento.codigo]"
               ></a>
               <button
                 pButton
@@ -103,7 +104,7 @@
     </div>
 
     <div class="ui-g-12">
-      <a pButton label="Novo Lançamento"></a>
+      <a pButton label="Novo Lançamento" routerLink="/lancamentos/novo"></a>
     </div>
   </div>
 </div>

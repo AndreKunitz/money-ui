@@ -1,9 +1,9 @@
+import { Lancamento } from './../core/model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
-import { Lancamento } from '../core/model';
 
 export class LancamentoFiltro {
   descricao: string;
@@ -70,6 +70,20 @@ export class LancamentoService {
 
   adicionarLancamento(lancamento: Lancamento): Observable<any> {
     return this.http.post<any>(this.lancamentosUrl, lancamento, {
+      headers: this.auth
+    });
+  }
+
+  atualizar(lancamento: Lancamento): Observable<any> {
+    return this.http.put<any>(
+      `${this.lancamentosUrl}/${lancamento.codigo}`,
+      lancamento,
+      { headers: this.auth }
+    );
+  }
+
+  buscarPorCodigo(codigo: number): Observable<any> {
+    return this.http.get<any>(`${this.lancamentosUrl}/${codigo}`, {
       headers: this.auth
     });
   }

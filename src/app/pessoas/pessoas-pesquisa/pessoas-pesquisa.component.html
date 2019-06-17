@@ -60,6 +60,7 @@
                 [ngClass]="'col-acoes-btn'"
                 pTooltip="Editar"
                 tooltipPosition="top"
+                [routerLink]="['/pessoas', pessoa.codigo]"
               ></a>
               <button
                 pButton
@@ -76,7 +77,7 @@
     </div>
 
     <div class="ui-g-12">
-      <a pButton label="Nova Pessoa"></a>
+      <a pButton label="Nova Pessoa" routerLink="/pessoas/novo"></a>
     </div>
   </div>
 </div>
