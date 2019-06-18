@@ -9,6 +9,7 @@ import { GrowlModule } from 'primeng/growl';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/components/common/messageservice';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { ErrorHandlerService } from './error-handler.service';
 import { PessoaService } from './../pessoas/pessoa.service';
@@ -31,7 +32,9 @@ registerLocaleData(localePt);
     PessoaService,
     AuthService,
     Title,
-    { provide: LOCALE_ID, useValue: 'pt-BR' }
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }
   ]
 })
 export class CoreModule {}

@@ -16,11 +16,11 @@ export class LoginFormComponent implements OnInit {
   ngOnInit() {}
 
   login(usuario, senha) {
-    this.authService
-      .login(usuario, senha)
-      .subscribe(
-        resp => console.log(resp),
-        erro => this.errorHandler.handle(erro)
-      );
+    this.authService.login(usuario, senha).subscribe(
+      resp => {
+        this.authService.armazernarToken(resp['access_token']);
+      },
+      erro => this.errorHandler.handle(erro)
+    );
   }
 }
