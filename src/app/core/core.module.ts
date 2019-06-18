@@ -13,6 +13,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { ErrorHandlerService } from './error-handler.service';
 import { PessoaService } from './../pessoas/pessoa.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
+import { AuthService } from './../seguranca/auth.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
@@ -28,6 +29,7 @@ registerLocaleData(localePt);
     MessageService,
     LancamentoService,
     PessoaService,
+    AuthService,
     Title,
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]

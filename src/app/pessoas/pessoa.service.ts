@@ -1,8 +1,10 @@
-import { Pessoa } from './../core/model';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+import { Pessoa } from './../core/model';
 
 export class PessoaFiltro {
   nome: string;
