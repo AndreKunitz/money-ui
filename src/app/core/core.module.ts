@@ -17,12 +17,19 @@ import { LancamentoService } from './../lancamentos/lancamento.service';
 import { AuthService } from './../seguranca/auth.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import { SegurancaRoutingModule } from '../seguranca/seguranca-routing.module';
 
 registerLocaleData(localePt);
 
 @NgModule({
   declarations: [NavbarComponent, PaginaNaoEncontradaComponent],
-  imports: [CommonModule, GrowlModule, ConfirmDialogModule, RouterModule],
+  imports: [
+    CommonModule,
+    GrowlModule,
+    ConfirmDialogModule,
+    RouterModule,
+    SegurancaRoutingModule
+  ],
   exports: [NavbarComponent, GrowlModule, ConfirmDialogModule],
   providers: [
     ErrorHandlerService,
