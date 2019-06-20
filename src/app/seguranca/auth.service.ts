@@ -38,4 +38,8 @@ export class AuthService {
       this.armazernarToken(token);
     }
   }
+
+  temPermissao(permissao: string): boolean {
+    return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
+  }
 }
