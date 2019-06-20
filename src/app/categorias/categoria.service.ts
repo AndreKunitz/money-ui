@@ -7,14 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class CategoriaService {
   private categoriasUrl = 'http://localhost:8080/categorias';
-  private auth = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-  });
 
   constructor(private http: HttpClient) {}
 
   listarTodas(): Observable<any> {
-    return this.http.get<any>(`${this.categoriasUrl}`, { headers: this.auth });
+    return this.http.get<any>(`${this.categoriasUrl}`);
   }
 }

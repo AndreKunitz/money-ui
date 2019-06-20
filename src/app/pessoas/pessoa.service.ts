@@ -17,15 +17,11 @@ export class PessoaFiltro {
 })
 export class PessoaService {
   private pessoasUrl = 'http://localhost:8080/pessoas';
-  private auth = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-  });
 
   constructor(private http: HttpClient) {}
 
   listar(): Observable<any> {
-    return this.http.get<any>(this.pessoasUrl, { headers: this.auth }).pipe(
+    return this.http.get<any>(this.pessoasUrl).pipe(
       map(res => {
         const resultado = {
           pessoas: res.content,
@@ -45,44 +41,34 @@ export class PessoaService {
       params = params.set('nome', filtro.nome);
     }
 
-    return this.http
-      .get<any>(this.pessoasUrl, { headers: this.auth, params })
-      .pipe(
-        map(res => {
-          const resultado = {
-            pessoas: res.content,
-            total: res.totalElements
-          };
-          return resultado;
-        })
-      );
+    return this.http.get<any>(this.pessoasUrl, { params }).pipe(
+      map(res => {
+        const resultado = {
+          pessoas: res.content,
+          total: res.totalElements
+        };
+        return resultado;
+      })
+    );
   }
 
   excluir(codigo: number): Observable<void> {
-    return this.http.delete<void>(`${this.pessoasUrl}/${codigo}`, {
-      headers: this.auth
-    });
+    return this.http.delete<void>(`${this.pessoasUrl}/${codigo}`);
   }
 
   alternarStatus(codigo: number, status: boolean): Observable<void> {
-    return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, status, {
-      headers: this.auth
-    });
+    return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, status);
   }
 
   adicionar(pessoa: Pessoa): Observable<any> {
-    return this.http.post<any>(this.pessoasUrl, pessoa, { headers: this.auth });
+    return this.http.post<any>(this.pessoasUrl, pessoa);
   }
 
   buscarPorCodigo(codigo: number): Observable<any> {
-    return this.http.get<any>(`${this.pessoasUrl}/${codigo}`, {
-      headers: this.auth
-    });
+    return this.http.get<any>(`${this.pessoasUrl}/${codigo}`);
   }
 
   atualizar(pessoa: Pessoa): Observable<any> {
-    return this.http.put<any>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa, {
-      headers: this.auth
-    });
+    return this.http.put<any>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa);
   }
 }
