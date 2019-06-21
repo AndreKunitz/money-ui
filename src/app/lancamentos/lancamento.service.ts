@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
+import { MoneyHttp } from './../seguranca/money-http';
 import { Lancamento } from './../core/model';
 import { environment } from 'src/environments/environment';
 
@@ -22,7 +23,7 @@ export class LancamentoFiltro {
 export class LancamentoService {
   private lancamentosUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: MoneyHttp) {
     this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
   }
 

@@ -20,7 +20,7 @@ export class LoginFormComponent implements OnInit {
   login(usuario, senha) {
     this.authService.login(usuario, senha).subscribe(
       resp => {
-        this.authService.armazernarToken(resp['access_token']);
+        this.authService.armazenarToken(resp['access_token']);
         this.router.navigate(['/lancamentos']);
       },
       erro => {

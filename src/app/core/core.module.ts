@@ -18,6 +18,7 @@ import { AuthService } from './../seguranca/auth.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { SegurancaRoutingModule } from '../seguranca/seguranca-routing.module';
+import { MoneyHttp } from '../seguranca/money-http';
 
 registerLocaleData(localePt);
 
@@ -41,7 +42,8 @@ registerLocaleData(localePt);
     Title,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     JwtHelperService,
-    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    MoneyHttp
   ]
 })
 export class CoreModule {}

@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
+import { MoneyHttp } from '../seguranca/money-http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class CategoriaService {
   private categoriasUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: MoneyHttp) {
     this.categoriasUrl = `${environment.apiUrl}/categorias`;
   }
 
