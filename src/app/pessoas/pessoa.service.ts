@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -61,7 +61,14 @@ export class PessoaService {
   }
 
   alternarStatus(codigo: number, status: boolean): Observable<void> {
-    return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, status);
+    const headers = new HttpHeaders().append(
+      'Content-Type',
+      'application/json'
+    );
+
+    return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, status, {
+      headers
+    });
   }
 
   adicionar(pessoa: Pessoa): Observable<any> {
