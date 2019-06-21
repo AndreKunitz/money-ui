@@ -31,29 +31,14 @@ export class AuthService {
     });
   }
 
-  obterNovoAccessToken2() {
-    const body = `grant_type=refresh_token`;
-
-    return this.http
-      .post<void>(this.oauthTokenUrl, body, {
-        headers: this.headers,
-        withCredentials: true
-      })
-      .subscribe(resp => {
-        this.armazenarToken(resp['access_token']);
-        console.log('Novo access token');
-      });
-  }
-
   obterNovoAccessToken(): Promise<void> {
-    const headers = new HttpHeaders()
-      .append('Content-Type', 'application/x-www-form-urlencoded')
-      .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
-
     const body = 'grant_type=refresh_token';
 
     return this.http
-      .post<any>(this.oauthTokenUrl, body, { headers, withCredentials: true })
+      .post<any>(this.oauthTokenUrl, body, {
+        headers: this.headers,
+        withCredentials: true
+      })
       .toPromise()
       .then(response => {
         this.armazenarToken(response.access_token);
