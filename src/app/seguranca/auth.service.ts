@@ -14,6 +14,7 @@ export class AuthService {
     'Content-Type': 'application/x-www-form-urlencoded',
     Authorization: 'Basic YW5ndWxhcjphbmd1bGFy'
   });
+
   jwtPayload: any;
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
