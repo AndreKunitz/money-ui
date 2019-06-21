@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Pessoa } from './../core/model';
+import { environment } from 'src/environments/environment';
 
 export class PessoaFiltro {
   nome: string;
@@ -16,9 +17,11 @@ export class PessoaFiltro {
   providedIn: 'root'
 })
 export class PessoaService {
-  private pessoasUrl = 'http://localhost:8080/pessoas';
+  private pessoasUrl: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.pessoasUrl = `${environment.apiUrl}/pessoas`;
+  }
 
   listar(): Observable<any> {
     return this.http.get<any>(this.pessoasUrl).pipe(

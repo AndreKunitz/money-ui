@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { ErrorHandlerService } from '../core/error-handler.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private oauthToeknUrl = 'http://localhost:8080/oauth/token';
+  private oauthTokenUrl: string;
   private headers = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
     Authorization: 'Basic YW5ndWxhcjphbmd1bGFy'
@@ -18,13 +18,14 @@ export class AuthService {
   jwtPayload: any;
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
+    this.oauthTokenUrl = `${environment.apiUrl}/oauth/token`;
     this.carregarToken();
   }
 
   login(usuario: string, senha: string): Observable<void> {
     const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
-    return this.http.post<void>(this.oauthToeknUrl, body, {
+    return this.http.post<void>(this.oauthTokenUrl, body, {
       headers: this.headers,
       withCredentials: true
     });
@@ -34,7 +35,7 @@ export class AuthService {
     const body = `grant_type=refresh_token`;
 
     return this.http
-      .post<void>(this.oauthToeknUrl, body, {
+      .post<void>(this.oauthTokenUrl, body, {
         headers: this.headers,
         withCredentials: true
       })

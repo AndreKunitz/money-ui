@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { environment } from 'src/environments/environment';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -22,8 +23,9 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        // whitelistedDomains: ['localhost:8080'],
-        blacklistedRoutes: ['oauth/token']
+        whitelistedDomains: environment.tokenWhitelistedDomains,
+        blacklistedRoutes: environment.tokenBlacklistedRoutes,
+        headerName: 'Authorization'
       }
     }),
     InputTextModule,
