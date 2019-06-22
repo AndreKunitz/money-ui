@@ -10,8 +10,4 @@ export class NavbarComponent implements OnInit {
   constructor(private auth: AuthService) {}
 
   ngOnInit() {}
-
-  criarNovoAccessToken() {
-    this.auth.obterNovoAccessToken();
-  }
 }
