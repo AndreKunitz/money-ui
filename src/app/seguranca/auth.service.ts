@@ -72,6 +72,11 @@ export class AuthService {
     return !token || this.jwtHelper.isTokenExpired(token);
   }
 
+  limparAccessToken() {
+    localStorage.removeItem('token');
+    this.jwtPayload = null;
+  }
+
   temPermissao(permissao: string) {
     return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
   }
