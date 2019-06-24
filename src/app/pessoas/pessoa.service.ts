@@ -1,8 +1,12 @@
-import { Pessoa } from './../core/model';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { HttpParams, HttpHeaders } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { MoneyHttp } from './../seguranca/money-http';
+import { Pessoa } from './../core/model';
+import { environment } from 'src/environments/environment';
 
 export class PessoaFiltro {
   nome: string;
@@ -14,16 +18,14 @@ export class PessoaFiltro {
   providedIn: 'root'
 })
 export class PessoaService {
-  private pessoasUrl = 'http://localhost:8080/pessoas';
-  private auth = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-  });
+  private pessoasUrl: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: MoneyHttp) {
+    this.pessoasUrl = `${environment.apiUrl}/pessoas`;
+  }
 
   listar(): Observable<any> {
-    return this.http.get<any>(this.pessoasUrl, { headers: this.auth }).pipe(
+    return this.http.get<any>(this.pessoasUrl).pipe(
       map(res => {
         const resultado = {
           pessoas: res.content,
@@ -43,44 +45,41 @@ export class PessoaService {
       params = params.set('nome', filtro.nome);
     }
 
-    return this.http
-      .get<any>(this.pessoasUrl, { headers: this.auth, params })
-      .pipe(
-        map(res => {
-          const resultado = {
-            pessoas: res.content,
-            total: res.totalElements
-          };
-          return resultado;
-        })
-      );
+    return this.http.get<any>(this.pessoasUrl, { params }).pipe(
+      map(res => {
+        const resultado = {
+          pessoas: res.content,
+          total: res.totalElements
+        };
+        return resultado;
+      })
+    );
   }
 
   excluir(codigo: number): Observable<void> {
-    return this.http.delete<void>(`${this.pessoasUrl}/${codigo}`, {
-      headers: this.auth
-    });
+    return this.http.delete<void>(`${this.pessoasUrl}/${codigo}`);
   }
 
   alternarStatus(codigo: number, status: boolean): Observable<void> {
+    const headers = new HttpHeaders().append(
+      'Content-Type',
+      'application/json'
+    );
+
     return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, status, {
-      headers: this.auth
+      headers
     });
   }
 
   adicionar(pessoa: Pessoa): Observable<any> {
-    return this.http.post<any>(this.pessoasUrl, pessoa, { headers: this.auth });
+    return this.http.post<any>(this.pessoasUrl, pessoa);
   }
 
   buscarPorCodigo(codigo: number): Observable<any> {
-    return this.http.get<any>(`${this.pessoasUrl}/${codigo}`, {
-      headers: this.auth
-    });
+    return this.http.get<any>(`${this.pessoasUrl}/${codigo}`);
   }
 
   atualizar(pessoa: Pessoa): Observable<any> {
-    return this.http.put<any>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa, {
-      headers: this.auth
-    });
+    return this.http.put<any>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa);
   }
 }

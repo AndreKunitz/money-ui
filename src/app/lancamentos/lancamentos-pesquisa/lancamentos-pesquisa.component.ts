@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { LancamentoFiltro } from './../lancamento.service';
 import { LancamentoService } from '../lancamento.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { AuthService } from 'src/app/seguranca/auth.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -25,6 +26,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   constructor(
+    private auth: AuthService,
     private lancamentosService: LancamentoService,
     private messageService: MessageService,
     private confirmation: ConfirmationService,

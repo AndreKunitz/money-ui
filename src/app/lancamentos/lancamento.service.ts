@@ -1,9 +1,13 @@
-import { Lancamento } from './../core/model';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
+
+import { MoneyHttp } from './../seguranca/money-http';
+import { Lancamento } from './../core/model';
+import { environment } from 'src/environments/environment';
 
 export class LancamentoFiltro {
   descricao: string;
@@ -17,13 +21,11 @@ export class LancamentoFiltro {
   providedIn: 'root'
 })
 export class LancamentoService {
-  private lancamentosUrl = 'http://localhost:8080/lancamentos';
-  private auth = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-  });
+  private lancamentosUrl: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: MoneyHttp) {
+    this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
+  }
 
   pesquisar(filtro: LancamentoFiltro): Observable<any> {
     let params = new HttpParams();
@@ -49,7 +51,7 @@ export class LancamentoService {
     }
 
     return this.http
-      .get<any>(`${this.lancamentosUrl}?resumo`, { headers: this.auth, params })
+      .get<any>(`${this.lancamentosUrl}?resumo`, { params: params })
       .pipe(
         map(res => {
           const resultado = {
@@ -63,28 +65,21 @@ export class LancamentoService {
   }
 
   excluir(codigo: number): Observable<void> {
-    return this.http.delete<void>(`${this.lancamentosUrl}/${codigo}`, {
-      headers: this.auth
-    });
+    return this.http.delete<void>(`${this.lancamentosUrl}/${codigo}`);
   }
 
   adicionarLancamento(lancamento: Lancamento): Observable<any> {
-    return this.http.post<any>(this.lancamentosUrl, lancamento, {
-      headers: this.auth
-    });
+    return this.http.post<any>(this.lancamentosUrl, lancamento);
   }
 
   atualizar(lancamento: Lancamento): Observable<any> {
     return this.http.put<any>(
       `${this.lancamentosUrl}/${lancamento.codigo}`,
-      lancamento,
-      { headers: this.auth }
+      lancamento
     );
   }
 
   buscarPorCodigo(codigo: number): Observable<any> {
-    return this.http.get<any>(`${this.lancamentosUrl}/${codigo}`, {
-      headers: this.auth
-    });
+    return this.http.get<any>(`${this.lancamentosUrl}/${codigo}`);
   }
 }

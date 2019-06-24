@@ -1,20 +1,21 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
+import { MoneyHttp } from '../seguranca/money-http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriaService {
-  private categoriasUrl = 'http://localhost:8080/categorias';
-  private auth = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
-  });
+  private categoriasUrl: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: MoneyHttp) {
+    this.categoriasUrl = `${environment.apiUrl}/categorias`;
+  }
 
   listarTodas(): Observable<any> {
-    return this.http.get<any>(`${this.categoriasUrl}`, { headers: this.auth });
+    return this.http.get<any>(`${this.categoriasUrl}`);
   }
 }
