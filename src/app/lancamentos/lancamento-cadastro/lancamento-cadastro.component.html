@@ -55,15 +55,15 @@
 
         <app-message
           [control]="formulario.get('descricao')"
-          error="required"
-          text="Informe uma descrição"
+          error="obrigatoriedade"
+          text="Informe uma descrição __"
         ></app-message>
         <app-message
           [control]="formulario.get('descricao')"
-          error="minlength"
+          error="tamanhoMinimo"
           text="Mínimo de {{
-            formulario.get('descricao').errors?.minlength?.requiredLength
-          }} caracteres"
+            formulario.get('descricao').errors?.tamanhoMinimo?.tamanho
+          }} caracteres __"
         ></app-message>
       </div>
 
