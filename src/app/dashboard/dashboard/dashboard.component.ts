@@ -1,5 +1,5 @@
-// import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 
 import * as moment from 'moment';
 
@@ -12,10 +12,24 @@ import { DashboardService } from './../dashboard.service';
 })
 export class DashboardComponent implements OnInit {
   pieChartData: any;
-
   lineChartData: any;
+  options = {
+    tooltips: {
+      callbacks: {
+        label: (tooltipItem, data) => {
+          const dataset = data.datasets[tooltipItem.datasetIndex];
+          const valor = dataset.data[tooltipItem.index];
+          const label = dataset.label ? dataset.label + ': ' : '';
+          return label + this.decimalPipe.transform(valor, '1.2-2');
+        }
+      }
+    }
+  };
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(
+    private dashboardService: DashboardService,
+    private decimalPipe: DecimalPipe
+  ) {}
 
   ngOnInit() {
     this.configurarGraficoPizza();
