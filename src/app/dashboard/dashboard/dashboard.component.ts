@@ -76,6 +76,7 @@ export class DashboardComponent implements OnInit {
 
   private totaisPorCadaDiaMes(dados, diasDoMes) {
     const totais: number[] = [];
+    const dadosConvertidos = this.converterSrtingsParaDatas(dados);
     for (const dia of diasDoMes) {
       let total = 0;
       for (const dado of dados) {
@@ -104,9 +105,11 @@ export class DashboardComponent implements OnInit {
     return dias;
   }
 
-  private converterSrtingsParaDatas(dados: Array<any>) {
+  converterSrtingsParaDatas(dados: Array<any>): Array<any> {
+    const dadosConvertidos = dados;
     for (const dado of dados) {
       dado.dia = moment(dado.dia, 'YYYY-MM-DD').toDate();
     }
+    return dadosConvertidos;
   }
 }
