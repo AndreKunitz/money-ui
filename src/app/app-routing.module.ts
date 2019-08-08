@@ -10,8 +10,11 @@ const rotas: Routes = [
     loadChildren: './lancamentos/lancamentos.module#LancamentosModule'
   },
   { path: 'pessoas', loadChildren: './pessoas/pessoas.module#PessoasModule' },
-
-  { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
+  {
+    path: 'dashboard',
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+  },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },
   { path: '**', redirectTo: 'pagina-nao-encontrada' }

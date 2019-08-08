@@ -21,7 +21,7 @@ export class LoginFormComponent implements OnInit {
     this.authService.login(usuario, senha).subscribe(
       resp => {
         this.authService.armazenarToken(resp['access_token']);
-        this.router.navigate(['/lancamentos']);
+        this.router.navigate(['/dashboard']);
       },
       erro => {
         if (erro.status === 400 && erro.error['error'] === 'invalid_grant') {
