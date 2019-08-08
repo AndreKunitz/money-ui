@@ -1,4 +1,3 @@
-import { DashboardService } from './../dashboard/dashboard.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgModule, LOCALE_ID } from '@angular/core';

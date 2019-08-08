@@ -26,9 +26,4 @@ export class DashboardService {
     return this.http.get<any>(`${this.lancamentosUrl}/estatisticas/por-dia`);
   }
 
-  private converterSrtingsParaDatas(dados: Array<any>) {
-    for (const dado of dados) {
-      dado.dia = moment(dado.dia, 'YYYY-MM-DD').toDate();
-    }
-  }
 }
