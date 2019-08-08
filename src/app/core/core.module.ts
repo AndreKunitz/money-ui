@@ -1,3 +1,4 @@
+import { DashboardService } from './../dashboard/dashboard.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgModule, LOCALE_ID } from '@angular/core';
@@ -15,6 +16,7 @@ import { ErrorHandlerService } from './error-handler.service';
 import { PessoaService } from './../pessoas/pessoa.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
 import { AuthService } from './../seguranca/auth.service';
+import { DashboardService } from './../dashboard/dashboard.service';
 import { SegurancaRoutingModule } from '../seguranca/seguranca-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MoneyHttp } from '../seguranca/money-http';
@@ -44,6 +46,7 @@ registerLocaleData(localePt);
     LancamentoService,
     PessoaService,
     AuthService,
+    DashboardService,
     Title,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     JwtHelperService,
