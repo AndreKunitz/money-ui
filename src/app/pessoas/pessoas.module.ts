@@ -12,6 +12,7 @@ import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.compo
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 import { SharedModule } from './../shared/shared.module';
 import { PessoasRoutingModule } from './pessoas-routing.module';
+import {PanelModule} from 'primeng/panel';
 
 @NgModule({
   declarations: [PessoaCadastroComponent, PessoasPesquisaComponent],
@@ -24,6 +25,7 @@ import { PessoasRoutingModule } from './pessoas-routing.module';
     TableModule,
     TooltipModule,
     InputMaskModule,
+    PanelModule,
 
     SharedModule,
     PessoasRoutingModule
