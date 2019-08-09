@@ -16,6 +16,7 @@ import { PessoaService } from './../pessoas/pessoa.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
 import { AuthService } from './../seguranca/auth.service';
 import { DashboardService } from './../dashboard/dashboard.service';
+import { RelatoriosService } from '../relatorios/relatorios.service';
 import { SegurancaRoutingModule } from '../seguranca/seguranca-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MoneyHttp } from '../seguranca/money-http';
@@ -46,6 +47,7 @@ registerLocaleData(localePt);
     PessoaService,
     AuthService,
     DashboardService,
+    RelatoriosService,
     Title,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     JwtHelperService,
