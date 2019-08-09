@@ -19,6 +19,13 @@
       routerLinkActive="ativo"
       *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')"
     >
+      <a routerLink="/dashboard">Dashboard</a>
+    </li>
+    <li
+      class="navbar-menuitem"
+      routerLinkActive="ativo"
+      *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')"
+    >
       <a routerLink="/lancamentos">Lançamentos</a>
     </li>
     <li
@@ -27,6 +34,13 @@
       *ngIf="auth.temPermissao('ROLE_PESQUISAR_PESSOA')"
     >
       <a routerLink="/pessoas">Pessoas</a>
+    </li>
+    <li
+      class="navbar-menuitem"
+      routerLinkActive="ativo"
+      *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')"
+    >
+      <a routerLink="/relatorios/lancamentos">Relatório</a>
     </li>
     <li class="navbar-menuitem" routerLinkActive="ativo">
       <a (click)="logout()">Logout</a>
