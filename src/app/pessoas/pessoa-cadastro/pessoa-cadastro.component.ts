@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MessageService } from 'primeng/components/common/messageservice';
 
-import { Pessoa } from 'src/app/core/model';
+import {Contato, Pessoa} from 'src/app/core/model';
 import { PessoaService } from '../pessoa.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
@@ -17,6 +17,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 export class PessoaCadastroComponent implements OnInit {
   pessoa = new Pessoa();
   exibindoFormularioContato = false;
+  contato: Contato;
 
   constructor(
     private pessoaService: PessoaService,
@@ -105,5 +106,6 @@ export class PessoaCadastroComponent implements OnInit {
 
   prepararNovoContato() {
     this.exibindoFormularioContato = true;
+    this.contato = new Contato();
   }
 }
