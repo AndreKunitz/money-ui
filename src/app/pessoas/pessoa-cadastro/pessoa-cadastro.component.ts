@@ -125,4 +125,8 @@ export class PessoaCadastroComponent implements OnInit {
     this.exibindoFormularioContato = true;
     this.contatoIndex = index;
   }
+
+  removerContato(index: number) {
+    this.pessoa.contatos.splice(index, 1);
+  }
 }
