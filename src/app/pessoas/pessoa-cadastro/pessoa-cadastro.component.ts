@@ -96,7 +96,6 @@ export class PessoaCadastroComponent implements OnInit {
 
   novo(form: FormControl) {
     form.reset();
-
     this.router.navigate(['/pessoas/novo']);
   }
 
@@ -107,5 +106,15 @@ export class PessoaCadastroComponent implements OnInit {
   prepararNovoContato() {
     this.exibindoFormularioContato = true;
     this.contato = new Contato();
+  }
+
+  confirmarContato(form: FormControl) {
+    this.pessoa.contatos.push(this.clonarContato(this.contato));
+    this.exibindoFormularioContato = false;
+    form.reset();
+  }
+
+  clonarContato(contato: Contato): Contato {
+    return new Contato(contato.codigo, contato.nome, contato.email, contato.telefone);
   }
 }
