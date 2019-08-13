@@ -118,6 +118,12 @@
         ></textarea>
       </div>
 
+      <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid">
+        <p-fileUpload name="anexo" mode="basic" auto="true" maxFileSize="1000000000" chooseLabel="Anexar"
+                      accept="image/*,application/*" [url]="urlUploadAnexo" (onBeforeSend)="antesUploadAnexo($event)"></p-fileUpload>
+
+      </div>
+
       <div class="ui-g-12">
         <button
           pButton
