@@ -46,21 +46,13 @@ export class LancamentoCadastroComponent implements OnInit {
 
   ngOnInit() {
     this.configurarFormulario();
-
     this.title.setTitle('Novo lançamento');
-
     const codigoLancamento = this.route.snapshot.params['codigo'];
-
     if (codigoLancamento) {
       this.carregarLancamento(codigoLancamento);
     }
-
     this.carregarCaterorias();
     this.carregarPessoas();
-  }
-
-  get urlUploadAnexo() {
-    return this.lancamentoService.urlUploadAnexo();
   }
 
   configurarFormulario() {
@@ -82,7 +74,9 @@ export class LancamentoCadastroComponent implements OnInit {
         codigo: [null, Validators.required],
         nome: []
       }),
-      observacao: []
+      observacao: [],
+      anexo: [],
+      urlAnexo: []
     });
   }
 
@@ -156,7 +150,6 @@ export class LancamentoCadastroComponent implements OnInit {
           severity: 'success',
           detail: 'Lançamento cadastrado com sucesso!'
         });
-
         this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
       },
       erro => {
@@ -188,20 +181,17 @@ export class LancamentoCadastroComponent implements OnInit {
       lancamento.dataVencimento,
       'YYYY-MM-DD'
     ).toDate();
-
     if (lancamento.dataPagamento) {
       lancamento.dataPagamento = moment(
         lancamento.dataVencimento,
         'YYYY-MM-DD'
       ).toDate();
     }
-
     return lancamento;
   }
 
   novo() {
     this.formulario.reset();
-
     // Workarround para o form reset não anular o valor de lancamento.tipo
     setTimeout(
       function() {
@@ -209,7 +199,6 @@ export class LancamentoCadastroComponent implements OnInit {
       }.bind(this),
       1
     );
-
     this.router.navigate(['/lancamentos/novo']);
   }
 
@@ -219,7 +208,27 @@ export class LancamentoCadastroComponent implements OnInit {
     );
   }
 
-  antesUploadAnexo(event: any) {
+  get urlUploadAnexo() {
+    return this.lancamentoService.urlUploadAnexo();
+  }
+
+  antesUploadAnexo(event) {
     event.xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+  }
+
+  aoTerminarUploadAnexo(event) {
+    const anexo = event.originalEvent.body;
+    this.formulario.patchValue({
+      anexo: anexo.nome,
+      urlAnexo: anexo.url
+    });
+  }
+
+  get nomeAnexo() {
+    const nome = this.formulario.get('anexo').value;
+    if (nome) {
+      return nome.substring(nome.indexOf('_') + 1, nome.length);
+    }
+    return '';
   }
 }
