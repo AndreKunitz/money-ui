@@ -161,8 +161,7 @@ export class LancamentoCadastroComponent implements OnInit {
   atualizarLancamento() {
     this.lancamentoService.atualizar(this.formulario.value).subscribe(
       lancamento => {
-        // this.lancamento = lancamento;
-        this.formulario.patchValue(lancamento);
+        this.formulario.patchValue(this.converterStringsParaData(lancamento));
 
         this.messageService.add({
           severity: 'success',
@@ -226,7 +225,7 @@ export class LancamentoCadastroComponent implements OnInit {
     this.uploadEmAndamento = false;
   }
 
-  erroUpload(event) {
+  erroUpload() {
     this.messageService.add({
       severity: 'error',
       detail: 'Erro ao tentar enviar anexo!'
@@ -241,4 +240,10 @@ export class LancamentoCadastroComponent implements OnInit {
     return '';
   }
 
+  removerAnexo() {
+    this.formulario.patchValue({
+      anexo: null,
+      urlAnexo: null
+    });
+  }
 }
