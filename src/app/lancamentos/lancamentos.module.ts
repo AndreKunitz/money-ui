@@ -11,7 +11,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { FileUploadModule } from 'primeng/primeng';
+import { FileUploadModule, ProgressSpinnerModule } from 'primeng/primeng';
 
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
@@ -34,6 +34,7 @@ import { SharedModule } from './../shared/shared.module';
     SelectButtonModule,
     DropdownModule,
     FileUploadModule,
+    ProgressSpinnerModule,
 
     CurrencyMaskModule,
 
