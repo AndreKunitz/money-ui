@@ -27,6 +27,10 @@ export class LancamentoService {
     this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
   }
 
+  urlUploadAnexo(): string {
+    return `${this.lancamentosUrl}/anexo`;
+  }
+
   pesquisar(filtro: LancamentoFiltro): Observable<any> {
     let params = new HttpParams();
     params = params.set('page', filtro.pagina.toString());

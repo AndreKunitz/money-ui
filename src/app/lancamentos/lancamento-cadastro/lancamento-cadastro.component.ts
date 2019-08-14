@@ -31,6 +31,7 @@ export class LancamentoCadastroComponent implements OnInit {
   pessoas = [];
   // lancamento = new Lancamento();
   formulario: FormGroup;
+  uploadEmAndamento = false;
 
   constructor(
     private lancamentoService: LancamentoService,
@@ -46,15 +47,11 @@ export class LancamentoCadastroComponent implements OnInit {
 
   ngOnInit() {
     this.configurarFormulario();
-
     this.title.setTitle('Novo lançamento');
-
     const codigoLancamento = this.route.snapshot.params['codigo'];
-
     if (codigoLancamento) {
       this.carregarLancamento(codigoLancamento);
     }
-
     this.carregarCaterorias();
     this.carregarPessoas();
   }
@@ -78,7 +75,9 @@ export class LancamentoCadastroComponent implements OnInit {
         codigo: [null, Validators.required],
         nome: []
       }),
-      observacao: []
+      observacao: [],
+      anexo: [],
+      urlAnexo: []
     });
   }
 
@@ -101,8 +100,7 @@ export class LancamentoCadastroComponent implements OnInit {
   carregarLancamento(codigo: number) {
     this.lancamentoService.buscarPorCodigo(codigo).subscribe(
       dados => {
-        // this.lancamento = this.converterStringsParaData(dados);
-        this.formulario.patchValue(dados);
+        this.formulario.patchValue(this.converterStringsParaData(dados));
         this.atualizarTituloEdicao();
       },
       erro => {
@@ -152,7 +150,6 @@ export class LancamentoCadastroComponent implements OnInit {
           severity: 'success',
           detail: 'Lançamento cadastrado com sucesso!'
         });
-
         this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
       },
       erro => {
@@ -164,8 +161,7 @@ export class LancamentoCadastroComponent implements OnInit {
   atualizarLancamento() {
     this.lancamentoService.atualizar(this.formulario.value).subscribe(
       lancamento => {
-        // this.lancamento = lancamento;
-        this.formulario.patchValue(lancamento);
+        this.formulario.patchValue(this.converterStringsParaData(lancamento));
 
         this.messageService.add({
           severity: 'success',
@@ -184,20 +180,17 @@ export class LancamentoCadastroComponent implements OnInit {
       lancamento.dataVencimento,
       'YYYY-MM-DD'
     ).toDate();
-
     if (lancamento.dataPagamento) {
       lancamento.dataPagamento = moment(
         lancamento.dataVencimento,
         'YYYY-MM-DD'
       ).toDate();
     }
-
     return lancamento;
   }
 
   novo() {
     this.formulario.reset();
-
     // Workarround para o form reset não anular o valor de lancamento.tipo
     setTimeout(
       function() {
@@ -205,7 +198,6 @@ export class LancamentoCadastroComponent implements OnInit {
       }.bind(this),
       1
     );
-
     this.router.navigate(['/lancamentos/novo']);
   }
 
@@ -213,5 +205,45 @@ export class LancamentoCadastroComponent implements OnInit {
     this.title.setTitle(
       `Edição de lançamento: ${this.formulario.get('descricao').value}`
     );
+  }
+
+  get urlUploadAnexo() {
+    return this.lancamentoService.urlUploadAnexo();
+  }
+
+  antesUploadAnexo() {
+    // event.xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    this.uploadEmAndamento = true;
+  }
+
+  aoTerminarUploadAnexo(event) {
+    const anexo = event.originalEvent.body;
+    this.formulario.patchValue({
+      anexo: anexo.nome,
+      urlAnexo: anexo.url
+    });
+    this.uploadEmAndamento = false;
+  }
+
+  erroUpload() {
+    this.messageService.add({
+      severity: 'error',
+      detail: 'Erro ao tentar enviar anexo!'
+    });
+    this.uploadEmAndamento = false;
+  }
+  get nomeAnexo() {
+    const nome = this.formulario.get('anexo').value;
+    if (nome) {
+      return nome.substring(nome.indexOf('_') + 1, nome.length);
+    }
+    return '';
+  }
+
+  removerAnexo() {
+    this.formulario.patchValue({
+      anexo: null,
+      urlAnexo: null
+    });
   }
 }

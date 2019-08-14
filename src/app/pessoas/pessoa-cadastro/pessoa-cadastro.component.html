@@ -149,24 +149,19 @@
       </div>
 
       <div class="ui-g-12">
-        <button
-          pButton
-          type="submit"
-          label="Salvar"
-          class="btn-form-acoes"
-          [disabled]="f.invalid"
+        <p-panel header="Contatos">
+          <app-pessoa-cadastro-contato [contatos]="pessoa.contatos"></app-pessoa-cadastro-contato>
+        </p-panel>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" class="btn-form-acoes" [disabled]="f.invalid"
         ></button>
-        <button
-          pButton
-          type="button"
-          label="Nova"
-          class="ui-button-secondary btn-form-acoes"
-          (click)="novo(f)"
+        <button pButton type="button" label="Nova" class="ui-button-secondary btn-form-acoes" (click)="novo(f)"
         ></button>
-        <a href="javascript:;" class="btn-form-acoes" routerLink="/pessoas"
-          >Voltar para a pesquisa</a
-        >
+        <a href="javascript:;" class="btn-form-acoes" routerLink="/pessoas">Voltar para a pesquisa</a>
       </div>
     </div>
   </form>
 </div>
+
