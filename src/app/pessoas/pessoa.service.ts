@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { MoneyHttp } from './../seguranca/money-http';
-import { Pessoa } from './../core/model';
+import {Cidade, Estado, Pessoa} from './../core/model';
 import { environment } from 'src/environments/environment';
 
 export class PessoaFiltro {
@@ -19,9 +19,13 @@ export class PessoaFiltro {
 })
 export class PessoaService {
   private pessoasUrl: string;
+  private cidadesUrl: string;
+  private estadosUrl: string;
 
   constructor(private http: MoneyHttp) {
     this.pessoasUrl = `${environment.apiUrl}/pessoas`;
+    this.cidadesUrl = `${environment.apiUrl}/cidades`;
+    this.estadosUrl = `${environment.apiUrl}/estados`;
   }
 
   listar(): Observable<any> {
@@ -40,11 +44,9 @@ export class PessoaService {
     let params = new HttpParams();
     params = params.set('page', filtro.pagina.toString());
     params = params.set('size', filtro.itensPorPagina.toString());
-
     if (filtro.nome) {
       params = params.set('nome', filtro.nome);
     }
-
     return this.http.get<any>(this.pessoasUrl, { params }).pipe(
       map(res => {
         const resultado = {
@@ -65,7 +67,6 @@ export class PessoaService {
       'Content-Type',
       'application/json'
     );
-
     return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, status, {
       headers
     });
@@ -81,5 +82,15 @@ export class PessoaService {
 
   atualizar(pessoa: Pessoa): Observable<any> {
     return this.http.put<any>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa);
+  }
+
+  listarEstados(): Observable<any> {
+    return this.http.get<any>(this.estadosUrl);
+  }
+
+  pesquisarCidades(estado): Observable<any> {
+    let params = new HttpParams();
+    params = params.set('estado', estado);
+    return this.http.get<any>(this.cidadesUrl, { params });
   }
 }
