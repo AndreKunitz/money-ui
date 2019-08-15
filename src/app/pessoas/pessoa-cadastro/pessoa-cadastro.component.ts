@@ -16,6 +16,7 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 })
 export class PessoaCadastroComponent implements OnInit {
   pessoa = new Pessoa();
+  estados: any[];
 
   constructor(
     private pessoaService: PessoaService,
@@ -28,9 +29,8 @@ export class PessoaCadastroComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle('Nova pessoa');
-
+    this.carregarEstados();
     const codigoPessoa = this.route.snapshot.params['codigo'];
-
     if (codigoPessoa) {
       this.carregarPessoa(codigoPessoa);
     }
@@ -67,7 +67,6 @@ export class PessoaCadastroComponent implements OnInit {
           severity: 'success',
           detail: 'Pessoa cadastrada com sucesso!'
         });
-
         this.router.navigate(['/pessoas', pessoaAdicionada.codigo]);
       },
       erro => {
@@ -101,5 +100,14 @@ export class PessoaCadastroComponent implements OnInit {
     this.title.setTitle(`Edição de pessoa: ${this.pessoa.nome}`);
   }
 
-
+  carregarEstados() {
+    this.pessoaService.listarEstados().subscribe(
+      lista => {
+        this.estados = lista.map(uf => ({ label: uf.nome, value: uf.codigo }));
+      },
+      erro => {
+        this.errorHandlerService.handle(erro);
+      }
+    );
+  }
 }
